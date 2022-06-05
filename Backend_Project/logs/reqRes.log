@@ -1,0 +1,5 @@
+{"name":"Sasta lens Req Logger","hostname":"Sanjay-Murmu","pid":22128,"body":{"status":400,"message":"\"password\" length must be less than or equal to 4 characters long"},"statusCode":200,"level":30,"msg":"response","time":"2022-06-05T12:54:43.258Z","v":0}
+{"name":"Sasta lens Req Logger","hostname":"Sanjay-Murmu","pid":24488,"body":{"status":400,"message":"\"phoneNumber\" is required"},"statusCode":200,"level":30,"msg":"response","time":"2022-06-05T12:55:28.864Z","v":0}
+{"name":"Sasta lens Req Logger","hostname":"Sanjay-Murmu","pid":16560,"body":{"status":400,"message":"\"password\" is not allowed"},"statusCode":200,"level":30,"msg":"response","time":"2022-06-05T12:55:59.164Z","v":0}
+{"name":"Sasta lens Req Logger","hostname":"Sanjay-Murmu","pid":22312,"body":{"status":400,"message":"\"password\" is not allowed"},"statusCode":200,"level":30,"msg":"response","time":"2022-06-05T12:58:35.897Z","v":0}
+{"name":"Sasta lens Req Logger","hostname":"Sanjay-Murmu","pid":20128,"body":{"status":401,"message":"jwt must be provided"},"statusCode":200,"level":30,"msg":"response","time":"2022-06-05T13:55:14.845Z","v":0}

@@ -1,0 +1,69 @@
+# What is Express?
+# Using Middleware
+# Working with Requests & Response (Eliegantly)
+  
+Express:- is a frame work || help in outsource some of the || highly flexsible;
+	nitty-gritty work,
+
+# Atlternatives to express.js
+	vanila Node.js 
+	Adonis.js
+	Koa
+	sail.js
+	...
+ 
+=====================XXX===================
+
+npm install --save express -->(save is for production) for production dependence;
+
+# Express is a frame work all about Middleware;
+* FrameWork:- Helper function, tools & rules that help you build your application!.
+Request ==> Middleware(req,res,next)=>{...} ===>Middleware==>(next) ==> (req,res,next)=>{...} ===>
+   ====>(res.send) ======> Response ===>  
+
+# app.use() --> allow us to add new  middlewaare func; || it accepts an arr, so called req handlers;
+  app((req,res,next)=>{}) // next is fun,which will be passed to this function only by expressjs,
+ and next func has to be executed to allow the req to travel to the next middleware. & take upto three arguments;
+
+# res.send(); --> allow to send response; allow to attched body which is of type any,
+	res.send(<h1>Hi</h1>)
+
+# app.use([path] callback[,callback..]) --> 1st is optional that is path which filter out certain requests;
+					 2. callback function that should be executed, we can have more then one of that callback.
+by default req doesn't parse incomming request body.
+
+# app.use(bodyParser.urlencoded()) ---> it register a middleware; it parse only text data; need to placed up;
+
+# app.get() ;--> same syntax as app.use, but it will only filter for incomming get requests;
+
+# app.post() ;--> same syntax as app.use, but it will only filter for incomming post requests;
+
+
+# Module Summary
+What is Express.js?
+# Express.js is Nodejs FrameWork - a package that adds a bunch of utility function and tools
+ and a clear set of rules on how the app should be build (middleware)
+
+# It's highly extensible and other packages can be plugged into it.(middleware)
+
+app.listen() --< Does two things, it calls http create server and passes itself 
+
+# Middleware.next() and res()
+	1. Express.js relies heavily on middleware functions 
+	- You can easily add them by calling use() 
+
+	2. Middleware functions handle a request and should call next() to forword the 	
+	  request to the next function in line or send a response;
+
+# Routing
+	1. You can filter requests by path and method;
+	2. If you filter by method, paths are matched exactly,
+	3. You can use the express.Router to split your routes and across files elegantely.
+
+
+# res.sendFIle() --> will allows us to do just send back a file to a user;
+
+# (process.aminModule); avaibale in all file no nedd to import the global  
+
+
+
