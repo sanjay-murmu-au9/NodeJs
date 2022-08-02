@@ -3,4 +3,6 @@ const app = express();
 
 app.use('/api/v1', require('./user.route'))
 
+app.use('/api/v1', require('./product.route'))
+
 module.exports = app;

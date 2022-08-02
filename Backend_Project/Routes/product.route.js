@@ -1,0 +1,10 @@
+const express = require('express');
+const app = express.Router()
+const productValidator = require('../Middleware/Validators/product.validator');
+const auth = require('../Middleware/auth/auth')
+
+const ProductController = require('../controller/adminController/Product')
+
+app.post('/createProduct', productValidator.createProduct, ProductController.createProduct)
+
+module.exports = app;

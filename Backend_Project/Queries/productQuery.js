@@ -1,4 +1,4 @@
-const ProductModel = require('../../Model/createProduct')
+const ProductModel = require('../Model/createProduct')
 
 class ProductQuery {
     async addProduct(body) {

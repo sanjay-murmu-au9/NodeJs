@@ -27,6 +27,7 @@ class Product {
 
 
         } catch (error) {
+            console.log(error, "error")
             __.errorMsg(req, res, 503, "service unavailable", error)
         }
     }
