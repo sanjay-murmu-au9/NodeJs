@@ -7,9 +7,9 @@ class ProductQuery {
     }
 
     async listProduct() {
+        // console.log()
         return await ProductModel.find({})
     }
-
 }
 
 module.exports = new ProductQuery()
