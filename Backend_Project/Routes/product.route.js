@@ -5,6 +5,7 @@ const auth = require('../Middleware/auth/auth')
 
 const ProductController = require('../controller/adminController/Product')
 
-app.post('/createProduct', productValidator.createProduct, ProductController.createProduct)
+app.post('/createProduct', productValidator.create_Product, ProductController.createProduct);
+app.get('/listingProduct', productValidator.list_product, ProductController.listingProduct)
 
 module.exports = app;

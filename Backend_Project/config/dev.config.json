@@ -2,7 +2,7 @@
     "ServerName":"develpoment",
     "_LOCAL_PORT_": 4000,
     "Database":{
-        "DatabaseName":"database",
+        "DatabaseName":"sastalens",
         "DatabasePort":27017,
         "DatabasePass":"cQGRLDLvylpULsXA",
         "DatabaseUsername":"SanjayMurmu",
