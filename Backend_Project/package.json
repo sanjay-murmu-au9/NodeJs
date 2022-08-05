@@ -17,6 +17,7 @@
   "author": "sanjay murmu || sanjaymurmu40work@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "argon2": "^0.28.7",
     "body-parser": "^1.20.0",
     "bunyan": "^1.8.15",
     "bunyan-express-serializer": "^1.0.0",

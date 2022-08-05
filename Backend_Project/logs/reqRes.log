@@ -60,3 +60,4 @@
 {"name":"Sasta lens Req Logger","hostname":"Sanjay-Murmu","pid":8232,"body":{"status":400,"message":"\"numOfReviews\" must be a string"},"statusCode":200,"level":30,"msg":"response","time":"2022-08-03T19:58:24.773Z","v":0}
 {"name":"Sasta lens Req Logger","hostname":"Sanjay-Murmu","pid":8812,"body":{"status":400,"message":"\"numOfReviews\" is not allowed"},"statusCode":200,"level":30,"msg":"response","time":"2022-08-03T19:59:52.104Z","v":0}
 {"name":"Sasta lens Req Logger","hostname":"Sanjay-Murmu","pid":8812,"body":{"status":400,"message":"\"reviews\" is not allowed"},"statusCode":200,"level":30,"msg":"response","time":"2022-08-03T20:00:09.846Z","v":0}
+{"name":"Sasta lens Req Logger","hostname":"Sanjay-Murmu","pid":8448,"body":{"status":401,"message":"jwt must be provided"},"statusCode":200,"level":30,"msg":"response","time":"2022-08-04T18:41:32.978Z","v":0}
