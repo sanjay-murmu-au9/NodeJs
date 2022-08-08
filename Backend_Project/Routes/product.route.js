@@ -7,6 +7,7 @@ const ProductController = require('../controller/adminController/Product')
 
 app.post('/createProduct', productValidator.create_Product, ProductController.createProduct);
 app.get('/listingProduct', auth.authentication, productValidator.list_product, ProductController.listingProduct);
+app.get('/detailProduct/:productId', ProductController.productDetail)
 
 
 module.exports = app;

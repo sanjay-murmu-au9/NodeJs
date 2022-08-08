@@ -51,6 +51,23 @@ class Product {
         }
     }
 
+    async productDetail(req, res) {
+        try {
+            const productId = req.params.productId;
+            const productDescription = await Query.ProductDetail(productId)
+            if (productDescription == undefined || productDescription == null) {
+                return __.customMsg(req, res, 404, 'Product id could match, Please try again!')
+            }
+            if (productDescription) {
+                return __.successMsg(req, res, 201, productDescription, "Product fetch successfully")
+            }
+
+        } catch (error) {
+            console.log(error)
+            __.errorMsg(req, res, 503, "service unavailable", error)
+        }
+    }
+
 
 }
 

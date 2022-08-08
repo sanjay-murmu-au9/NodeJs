@@ -10,6 +10,6 @@ module.exports.encryptorToken = (data) => {
 
     const Cipher = cipher(process.env.SECRET_KEY);
     const CipherText = Cipher(data.toString())
-    console.log(CipherText, "<<<<<<<<CipherText")
+    // console.log(CipherText, "<<<<<<<<CipherText")
     return CipherText;
 }

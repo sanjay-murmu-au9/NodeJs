@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose')
 const ProductModel = require('../Model/createProduct')
 
 class ProductQuery {
@@ -9,6 +10,10 @@ class ProductQuery {
     async listProduct() {
         // console.log()
         return await ProductModel.find({})
+    }
+
+    async ProductDetail(prodId) {
+        return await ProductModel.find({ _id: mongoose.Types.ObjectId(prodId) })
     }
 }
 
