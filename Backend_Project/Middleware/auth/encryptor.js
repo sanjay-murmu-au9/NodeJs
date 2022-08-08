@@ -1,4 +1,5 @@
 module.exports.encryptorToken = (data) => {
+    // console.log(data, "data")
     const cipher = salt => {
         const textToChars = text => text.split('').map(c => c.charCodeAt(0))
         const byteHex = n => ('0' + Number(n).toString(16).substr(-2))
@@ -9,5 +10,6 @@ module.exports.encryptorToken = (data) => {
 
     const Cipher = cipher(process.env.SECRET_KEY);
     const CipherText = Cipher(data.toString())
+    console.log(CipherText, "<<<<<<<<CipherText")
     return CipherText;
 }

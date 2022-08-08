@@ -28,16 +28,18 @@ class UserCtrl {
 
     async userLogin(req, res) {
         try {
-            // const { email, password } = req.body;
-            const userLogin = await Query.userLogin(req.body.email);
+            const { email, password } = req.body;
+            const userLogin = await Query.userLogin(email, password);
 
             if (!userLogin) return __.customMsg(req, res, 404, "User does not exist with this email")
-            // if (!userLogin.password || userLogin.password !== md5(req.body.password)) return __.customMsg(req, res, 404, "Incorrect password")
+            // if (!userLogin.password || userLogin.password !== md5(req.body.password)) { return __.customMsg(req, res, 404, "Incorrect password") }
+
+            console.log('........>>>>>>>>>>>>>>>')
 
 
             if (userLogin) {
-                let token = jwt.createToken(userLogin._id);
-                console.log(token, '<<<<<<<<<<<<<<<<<userlogin')
+                let token = await jwt.createToken(userLogin);
+                // console.log(token, '<<<<<<<<<<<<<<<<<userlogin')
 
 
                 return __.successMsg(req, res, 200, { userLogin, token }, "User logged in successfully")

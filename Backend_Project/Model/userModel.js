@@ -12,7 +12,8 @@ const UserSchema = new Schema({
     },
     password: {
         type: String,
-        default: "mysecretpassword"
+        required: true,
+        // default: "mysecretpassword"
     },
     isPasswordChanged: {
         type: Boolean,

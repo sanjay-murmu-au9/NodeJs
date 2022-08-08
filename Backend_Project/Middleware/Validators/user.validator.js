@@ -11,7 +11,8 @@ class UserValidator {
             phoneNumber: Joi.string().regex(phoneNumberRegEx).optional(),
             location: Joi.string().optional(),
             profilePhoto: Joi.string().optional(),
-            password: Joi.string().optional()
+            password: Joi.string().required(),
+            confirmPassword: Joi.string().required()
         })
         try {
             const result = await Joi.validate(req.body, schema)
@@ -25,7 +26,8 @@ class UserValidator {
     async userLogin(req, res, next) {
         const schema = Joi.object().keys({
             email: Joi.string().required(),
-            password: Joi.string().min(4).max(20).required()
+            password: Joi.string().min(4).max(20).required(),
+            // confirmPassword: Joi.string().required()
         })
         try {
             const result = await Joi.validate(req.body, schema)
