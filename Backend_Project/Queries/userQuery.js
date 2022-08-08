@@ -16,8 +16,8 @@ class userQuery {
 
     async userLogin(email, password) {
         console.log(email, '<<<<<<<<<email', password)
-        const userLogin = await userModel.find({ email }).select('+password') // if key value are same then key value can be avoid;
-        // console.log(userLogin, "<<<<<<<<<<<,,userLogin")
+        const userLogin = await userModel.findOne({ email }).select('+password') // if key value are same then key value can be avoid;
+        console.log(userLogin, "<<<<<<<<<<<,,userLogin")
 
         if (userLogin && await argon2.verify(userLogin.password, password)) {
             userLogin.password = undefined
