@@ -20,6 +20,6 @@ app.use(('/admin'), adminRoutes)
 app.use(shopRoutes)
 app.use(errorController.get404)
 
-app.listen(3000, () => {
-    console.log('App listening on port 3000!');
+app.listen(4000, () => {
+    console.log('App listening on port 4000!');
 });
