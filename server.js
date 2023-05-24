@@ -11,6 +11,7 @@ app.set('views', 'views')
 const adminRoute = require('./router/admin')
 const shopRoute = require('./router/shop')
 const errorController = require('./controller/error')
+const mongoConnect = require('./util/database').mongoConnect;
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')));
@@ -21,6 +22,6 @@ app.use(shopRoute)
 
 app.use(errorController.get404)
 
-app.listen(4040, () => {
-    console.log('App listening on port 4040!');
-});
+mongoConnect(() => {
+    app.listen(4040);
+})
