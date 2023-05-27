@@ -3,12 +3,14 @@ const mongoDb = require('mongodb');
 // const Cart = require('../Model/cart');
 
 class Product {
-    constructor(title, price, description, imageUrl, id) {
+    constructor(title, imageUrl, price, description, id, userId) {
         this.title = title;
+        this.imageUrl = imageUrl;
         this.price = price;
         this.description = description;
-        this.imageUrl = imageUrl;
-        this._id = id;
+        this._id = id ? new mongoDb.ObjectId(id) : null;
+        // this._id = id
+        this.userId = userId;
     }
 
     save() {
@@ -21,7 +23,7 @@ class Product {
         } else {
             return dbOp = db.collection('products')
                 .insertOne(this).then(result => {
-                    // console.log(result)
+                    return result;
                 }).catch(err => {
                     console.log(err)
                 })
@@ -56,7 +58,7 @@ class Product {
     }
 
     static deleteById(id) {
-        console.log(id, "req.body")
+        // console.log(id, "req.body")
         const db = getDb();
         return db.collection('products').deleteOne({ _id: new mongoDb.ObjectId(id) }).then(result => { console.log(result) }).catch(err => { console.log(err) })
     }

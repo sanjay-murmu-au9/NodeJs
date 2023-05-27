@@ -37,10 +37,10 @@ exports.postAddProduct = (req, res, next) => {
     const price = req.body.price;
     const descrition = req.body.description;
 
-    const product = new Product(title, imageUrl, price, descrition)
+    const product = new Product(title, imageUrl, price, descrition, null, req.user._id)
+
     product.save()
         .then(result => {
-            // console.log('Created Product')
             res.redirect('/admin/products');
         })
         .catch(err => {
@@ -67,16 +67,16 @@ exports.getProducts = (req, res, next) => {
 exports.postEditProduct = (req, res, next) => {
     const prodId = req.body.productId;
     const updatedTitle = req.body.title;
-    const updatedPrice = req.body.price;
     const updatedImageUrl = req.body.imageUrl;
+    const updatedPrice = req.body.price;
     const updatedDesc = req.body.description;
 
 
     const updatedProduct = new Product(
         updatedTitle,
+        updatedImageUrl,
         updatedPrice,
         updatedDesc,
-        updatedImageUrl,
         new ObjectId(prodId)
     )
     updatedProduct

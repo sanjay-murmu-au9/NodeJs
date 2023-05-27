@@ -79,12 +79,15 @@ exports.getCheckout = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
     const prodId = req.body.productId;
-    // console.log(prodId, "KKKKKK")
-    Product.findById(prodId, (product) => {
-        // console.log(prodId, "<<<<<<product")
-        Cart.addProduct(prodId, product.price)
-    })
-    res.redirect('/cart')
+    Product.findById(prodId)
+        .then((product) => {
+            return req.user.addToCart(product);
+        }).then(result => {
+            console.log(result, "postCart")
+        })
+        .catch(err => {
+            console.log(err)
+        })
 }
 
 exports.postCartDeleteProduct = (req, res, next) => {
