@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "start-server": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node server.js",
+    "start-server": "node server.js",
+    "dev": "nodemon server.js"
   },
   "author": "Sanjay Murmu",
   "license": "ISC",
