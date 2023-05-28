@@ -93,7 +93,8 @@ class User {
                     items: products,
                     user: {
                         _id: new mongoDb.ObjectId(this._id),
-                        name: this.name
+                        name: this.name,
+                        email: this.email
                     }
                 }
                 return db.collection('orders').insertOne(order)
@@ -106,6 +107,14 @@ class User {
                         { $set: { cart: { items: [] } } }
                     )
             })
+    }
+
+    getOrders() {
+        const db = getDb();
+        return db
+            .collection('orders')
+            .find({ "user._id": new mongoDb.ObjectId(this._id) })
+            .toArray();
     }
 }
 

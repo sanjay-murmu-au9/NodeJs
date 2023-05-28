@@ -58,9 +58,12 @@ exports.getCart = (req, res, next) => {
 }
 
 exports.getOrders = (req, res, next) => {
-    res.render('shop/orders', {
-        path: '/orders',
-        pageTitle: 'Your Orders'
+    req.user.getOrders().then(order => {
+        res.render('shop/orders', {
+            path: '/orders',
+            pageTitle: 'Your Orders',
+            orders: order
+        })
     })
 }
 
@@ -96,6 +99,7 @@ exports.postCartDeleteProduct = (req, res, next) => {
 exports.postOrder = (req, res, next) => {
     req.user.addOrder()
         .then(result => {
+            // console.log(result, ">>>>>>>>>>>>>")
             res.redirect('/orders')
         }).catch(err => {
             console.log(err)
