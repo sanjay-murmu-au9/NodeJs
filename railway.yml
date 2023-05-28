@@ -1,0 +1,3 @@
+commands:
+  - name: Deploy
+    command: railway up
