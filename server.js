@@ -12,6 +12,7 @@ const User = require('./Model/user');
 const adminRoute = require('./router/admin')
 const shopRoute = require('./router/shop')
 const errorController = require('./controller/error')
+const authlogin = require('./router/auth')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')));
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 
 app.use('/admin', adminRoute)
 app.use(shopRoute)
+app.use(authlogin)
 
 
 app.use(errorController.get404)
