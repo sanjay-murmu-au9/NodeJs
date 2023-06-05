@@ -2,8 +2,23 @@ const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
+const session = require('express-session')
+const MONGODB_URI = 'mongodb+srv://Sanjaymurmu40:bW9nGBnl3eGH4UkO@shopdatabaseusingmongoo.q18dd.mongodb.net/test?retryWrites=true&w=majority'
+const MongoDBStore = require('connect-mongodb-session')(session);
+
 
 const app = express();
+const store = new MongoDBStore({
+    uri: MONGODB_URI,
+    collection: 'session',
+    // expire:
+});
+
+// Catch errors
+store.on('error', function (error) {
+    console.log(error);
+});
+
 
 app.set('view engine', 'ejs');
 app.set('views', 'views')
@@ -12,8 +27,9 @@ const User = require('./Model/user');
 const adminRoute = require('./router/admin')
 const shopRoute = require('./router/shop')
 const errorController = require('./controller/error')
-const authlogin = require('./router/auth')
+const authlogin = require('./router/auth');
 
+app.use(session({ secret: 'my secret', resave: false, saveUninitialized: true, store: store/*cookie:{maxAge:}*/ }))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -35,10 +51,12 @@ app.use(authlogin)
 
 app.use(errorController.get404)
 
-mongoose.connect('mongodb+srv://Sanjaymurmu40:bW9nGBnl3eGH4UkO@shopdatabaseusingmongoo.q18dd.mongodb.net/test?retryWrites=true&w=majority')
+mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
     .then(result => {
         User.findOne().then(user => {
-            // console.log(user, "KKKKKKKKKKKKKKKKKK")
             if (!User) {
                 const user = new User({
                     name: "Sanjay Murmu",
