@@ -29,7 +29,7 @@ const shopRoute = require('./router/shop')
 const errorController = require('./controller/error')
 const authlogin = require('./router/auth');
 
-app.use(session({ secret: 'my secret', resave: false, saveUninitialized: true, store: store/*cookie:{maxAge:}*/ }))
+app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false, store: store/*cookie:{maxAge:}*/ }))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')));
 

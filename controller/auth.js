@@ -5,7 +5,7 @@ exports.login = (req, res, next) => {
     res.render('auth/login', {
         pageTitle: 'login',
         path: '/login',
-        isAuthenticated: req.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
     });
 }
 
@@ -15,4 +15,12 @@ exports.postLogin = (req, res, next) => {
     req.session.isLoggedIn = true
     // res.setHeader('Set-Cookie', 'loggedIn=true');
     res.redirect('/')
+}
+
+
+exports.logout = (req, res, next) => {
+    req.session.destroy((err) => {
+        console.log(err);
+        res.redirect('/')
+    })
 }
