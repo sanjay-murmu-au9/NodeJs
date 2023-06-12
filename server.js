@@ -3,7 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const session = require('express-session')
-const MONGODB_URI = 'mongodb+srv://Sanjaymurmu40:bW9nGBnl3eGH4UkO@shopdatabaseusingmongoo.q18dd.mongodb.net/test?retryWrites=true&w=majority'
+const MONGODB_URI = 'mongodb+srv://Sanjaymurmu40:bW9nGBnl3eGH4UkO@shopdatabaseusingmongoo.q18dd.mongodb.net/shop?retryWrites=true&w=majority'
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 
@@ -16,7 +16,7 @@ const store = new MongoDBStore({
 
 // Catch errors
 store.on('error', function (error) {
-    console.log(error);
+    console.log(error, "session error");
 });
 
 
@@ -59,18 +59,6 @@ mongoose.connect(MONGODB_URI, {
     useUnifiedTopology: true,
 })
     .then(result => {
-        User.findOne().then(user => {
-            if (!User) {
-                const user = new User({
-                    name: "Sanjay Murmu",
-                    email: "Sanjaymurmu40work@gmail.com",
-                    cart: {
-                        items: []
-                    }
-                });
-                user.save();
-            }
-        })
         console.log('mongoose connected!!')
         app.listen(4040)
     }).catch(err => {

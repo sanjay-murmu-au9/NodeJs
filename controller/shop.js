@@ -15,7 +15,10 @@ exports.getProducts = (req, res, next) => {
 }
 
 exports.getProduct = (req, res, next) => {
-    const prodId = req.params.productId || 1235;
+    const prodId = req.params.productId;
+    if (!prodId) {
+        return res.redirect('/login')
+    }
     Product.findById(prodId)
         .then(product => {
             res.render('shop/product-detail', {
@@ -51,10 +54,9 @@ exports.getCart = (req, res, next) => {
         .populate('cart.items.productId') // showing product details too;
         // .execPopulate()
         .then(user => {
-            // console.log(user.cart.items, "<<<<user")
             const products = user.cart.items;
-            res.render('shop/cart', {
-                path: '/cart',
+            res.render('shop/cart', { // shop ke undet cart.ejs usko render kro
+                path: '/cart', // navigation
                 pageTitle: 'Your Cart',
                 products: products,
                 isAuthenticated: req.session.isLoggedIn
@@ -89,7 +91,6 @@ exports.postCart = (req, res, next) => {
             return req.user.addToCart(product);
         }).then(result => {
             res.redirect('/cart')
-            // console.log(result, "postCart")
         })
         .catch(err => {
             console.log(err)
@@ -107,17 +108,16 @@ exports.postCartDeleteProduct = (req, res, next) => {
 exports.postOrder = (req, res, next) => {
     req.user.populate('cart.items.productId')
         .then((user) => {
-            // console.log(user.cart.items, 'populateItems')
             const products = user.cart.items.map(i => {
-                // console.log(1, "<<<map")
                 return {
                     quantity: i.quantity,
                     product: { ...i.productId._doc }
                 }
             });
+
             const order = new Order({
                 user: {
-                    name: req.user.name,
+                    name: req.user.name ? req.user.name : 'sanjay Murmu',
                     userId: req.user // it will fetch userId automatically
                 },
                 products: products,
@@ -125,7 +125,6 @@ exports.postOrder = (req, res, next) => {
             })
             return order.save()
         }).then(result => {
-            // console.log(result, ">>>>>>>result")
             return req.user.clearCart()
         }).then((result) => {
             res.redirect('/orders')
