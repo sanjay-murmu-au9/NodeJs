@@ -3,6 +3,7 @@ const User = require('../Model/user')
 const bcrypt = require('bcryptjs')
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport')
+const { check, validationResult } = require('express-validator/check');
 
 const transporter = nodemailer.createTransport(
     sendgridTransport({
@@ -22,19 +23,45 @@ exports.login = (req, res, next) => {
     res.render('auth/login', {
         pageTitle: 'login',
         path: '/login',
-        isAuthenticated: false,
-        errorMessage: message
+        errorMessage: message,
+        oldInput: {
+            email: '',
+            password: ''
+        },
+        validationErrors: []
     });
 }
 
 exports.postLogin = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
+    const errors = validationResult(req);
+    console.log(errors.array, "<<<<<<errros")
+    if (!errors.isEmpty()) {
+        return res.status(422).render('auth/login', {
+            path: '/login',
+            pageTitle: 'Login',
+            errorMessage: errors.array()[0].msg,
+            oldInput: {
+                email: email,
+                password: password
+            },
+            validationErrors: errors.array()
+        })
+    }
     User.findOne({ email: email })
         .then(user => {
             if (!user) {
-                req.flash('error', 'Invalid email or password!')
-                return res.redirect('/login')
+                return res.status(422).render('auth/login', {
+                    path: '/login',
+                    pageTitle: 'Login',
+                    errorMessage: 'Invalid email or password.',
+                    oldInput: {
+                        email: email,
+                        password: password
+                    },
+                    validationErrors: [{ param: 'email', param: 'password' }]
+                })
             }
             bcrypt.compare(password, user.password)
                 .then((doMatch) => {
@@ -47,8 +74,16 @@ exports.postLogin = (req, res, next) => {
                             res.redirect('/')
                         });
                     }
-                    req.flash('error', "Invalid email or password!")
-                    res.redirect('/login')
+                    return res.status(422).render('auth/login', {
+                        path: '/login',
+                        pageTitle: 'Login',
+                        errorMessage: 'Invalid email or password.',
+                        oldInput: {
+                            email: email,
+                            password: password
+                        },
+                        validationErrors: [{ param: 'email', param: 'password' }]
+                    })
                 }).catch(err => {
                     console.log(err);
                     res.redirect('/login')
@@ -79,6 +114,12 @@ exports.getSignup = (req, res, next) => {
         pageTitle: 'sign up',
         isAuthenticated: false,
         errorMessage: message,
+        oldInput: {
+            email: "",
+            password: "",
+            confirmPassword: ""
+        },
+        validationErrors: []
     });
 };
 
@@ -87,6 +128,23 @@ exports.postSignup = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
+
+    const errors = validationResult(req);
+    // console.log(errors.array(), "LLLLLLLLLLLLLLL")
+    if (!errors.isEmpty()) {
+        console.log(errors.array(), ">>>>>>>")
+        return res.status(422).render('auth/signup', {
+            path: '/signup',
+            pageTitle: 'sign up',
+            errorMessage: errors.array()[0].msg,
+            oldInput: {
+                email: email,
+                password: password,
+                confirmPassword: req.body.confirmPassword
+            },
+            validationErrors: errors.array()
+        });
+    }
     if (password !== confirmPassword) {
         req.flash('error', `Password didn't matched `)
         return res.redirect('/signup')
@@ -94,10 +152,12 @@ exports.postSignup = (req, res, next) => {
     User.findOne({ email: email })
         .then(userDoc => {
             if (userDoc) {
-                req.flash('error', 'Email allready available Please try with different email')
+                req.flash(
+                    'error',
+                    'Email allready available Please try with different email')
                 return res.redirect('/login')
             }
-            return bcrypt.hash(password, 12)
+            bcrypt.hash(password, 12)
                 .then(hashedPassword => {
                     const user = new User({
                         email: email,
@@ -108,17 +168,16 @@ exports.postSignup = (req, res, next) => {
                     return user.save()
                 }).then(result => {
                     res.redirect('/login')
-                    return transporter.sendMail({
-                        to: email,
-                        from: 'sanjaymurmu40work@gmail.com',
-                        subject: 'Signup successed!',
-                        html: `<h1>You successfully signed up!</h1>`
-                    })
+                    // return transporter.sendMail({
+                    //     to: email,
+                    //     from: 'sanjaymurmu40work@gmail.com',
+                    //     subject: 'Signup successed!',
+                    //     html: `<h1>You successfully signed up!</h1>`
+                    // })
                 })
-
-        })
-        .catch(err => {
-            console.log(err)
+                .catch(err => {
+                    console.log(err)
+                })
         })
 }
 
@@ -153,7 +212,6 @@ exports.postReset = (req, res, next) => {
         const token = buffer.toString('hex');
         User.findOne({ email: email })
             .then(user => {
-                console.log(user, "<<<<<<<user")
                 if (!user) {
                     req.flash('error', `No Matched account found with this ${email}`)
                     return res.redirect('/reset');
@@ -202,7 +260,6 @@ exports.getNewPassword = (req, res, next) => {
             console.log(err)
         })
 }
-
 
 exports.postNewPassword = (req, res, next) => {
     const newPassword = req.body.password;
